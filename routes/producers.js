@@ -49,8 +49,7 @@ module.exports = () => {
       })
       .catch(err => {
         res.send({
-          msg: "Failed to register user! Error:\n" + err,
-          verified: false
+          msg: "Failed to check database. Error:\n" + err
         });
         console.log(err);
       });
