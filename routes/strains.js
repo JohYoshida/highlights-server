@@ -21,38 +21,42 @@ module.exports = () => {
   });
 
   // Post a new strain
-  router.post("/", (req, res) => {
+  router.post("/:type/:name", (req, res) => {
     let id = uuid();
-    let name = "Purple Kush";
-    let type = "Indica";
+    let { type, name } = req.params;
+    console.log(type, name);
     // Check for existing strain
     knex("strains")
       .first()
-      .where({ name })
+      .where({ type, name })
       .then(strain => {
         if (strain) {
           res.send({
-            msg: "A strain with that name already exists.",
-            verified: false
+            msg: "A strain with that name already exists."
           });
         } else {
           // Insert new strain into db
           knex("strains")
             .insert({ id, name, type })
             .then(() => {
-              res.send({ msg: "Added to db", obj: { id, name, type } });
+              res.send({
+                msg: "Added strain to database.",
+                obj: { id, name, type }
+              });
             })
             .catch(err => {
-              res.send({ err });
+              res.send({
+                msg: "Failed to add strain to database. Error:\n" + err
+              });
+              console.log(err);
             });
         }
       })
       .catch(err => {
         res.send({
-          msg: "Failed to register user! Error:\n" + err,
-          verified: false
+          msg: "Failed database check. Error:\n" + err
         });
-        console.log("Error!", err);
+        console.log(err);
       });
   });
 
@@ -64,7 +68,10 @@ module.exports = () => {
         res.send({ msg: "Deleted all strains" });
       })
       .catch(err => {
-        res.send({ err });
+        res.send({ msg: "Failed to delete all strains. Error:\n" + err });
+        console.log(err);
+      });
+  });
       });
   });
 
