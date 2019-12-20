@@ -64,7 +64,21 @@ module.exports = () => {
         res.send({ msg: "Deleted all producers" });
       })
       .catch(err => {
-        res.send({ err });
+        res.send({ msg: "Failed to delete all producers. Error:\n" + err });
+      });
+  });
+
+  // Delete a producer by ID
+  router.delete("/:id", (req, res) => {
+    let { id } = req.params;
+    knex("producers")
+      .where({ id })
+      .del()
+      .then(() => {
+        res.send({ msg: "Deleted producer " + id });
+      })
+      .catch(err => {
+        res.send({ msg: "Failed to delete producer. Error:\n" + err });
       });
   });
 
