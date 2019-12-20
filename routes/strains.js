@@ -11,12 +11,13 @@ module.exports = () => {
 
   // List strains
   router.get("/", (req, res) => {
-    knex("strains").then(strains => {
-      res.send(strains);
-    })
-    .catch(err => {
-      res.send({ err });
-    });
+    knex("strains")
+      .then(strains => {
+        res.send(strains);
+      })
+      .catch(err => {
+        res.send({ err });
+      });
   });
 
   // Post a new strain

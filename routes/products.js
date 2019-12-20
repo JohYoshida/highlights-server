@@ -11,12 +11,13 @@ module.exports = () => {
 
   // List products
   router.get("/", (req, res) => {
-    knex("products").then(products => {
-      res.send(products);
-    })
-    .catch(err => {
-      res.send({ err });
-    });
+    knex("products")
+      .then(products => {
+        res.send(products);
+      })
+      .catch(err => {
+        res.send({ err });
+      });
   });
 
   // Post a new product
