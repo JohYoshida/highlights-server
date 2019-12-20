@@ -11,10 +11,9 @@ module.exports = () => {
 
   // List strains
   router.get("/", (req, res) => {
-    knex("strains")
-      .then(strains => {
-        res.send(strains)
-      })
+    knex("strains").then(strains => {
+      res.send(strains);
+    });
   });
 
   // Post a new strain
@@ -37,14 +36,17 @@ module.exports = () => {
           knex("strains")
             .insert({ id, name, type })
             .then(() => {
-              res.send({ msg: "Added to db", obj: { id, name, type }})
-            })
+              res.send({ msg: "Added to db", obj: { id, name, type } });
+            });
         }
       })
       .catch(err => {
-        res.send({ msg: "Failed to register user! Error:\n" + err, verified: false });
+        res.send({
+          msg: "Failed to register user! Error:\n" + err,
+          verified: false
+        });
         console.log("Error!", err);
-      })
+      });
   });
 
   // Delete all strains
@@ -52,7 +54,7 @@ module.exports = () => {
     knex("strains")
       .del()
       .then(() => {
-        res.send({ msg: "Deleted all strains"})
+        res.send({ msg: "Deleted all strains" });
       });
   });
 

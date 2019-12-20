@@ -11,10 +11,9 @@ module.exports = () => {
 
   // List products
   router.get("/", (req, res) => {
-    knex("products")
-      .then(products => {
-        res.send(products)
-      })
+    knex("products").then(products => {
+      res.send(products);
+    });
   });
 
   // Post a new product
@@ -22,14 +21,14 @@ module.exports = () => {
     let product = {
       id: uuid(),
       producer_id: uuid(),
-      strain_id: uuid(),
+      strain_id: uuid()
     };
     // Insert new product into db
     knex("products")
       .insert(product)
       .then(() => {
-        res.send({ msg: "Added to db", obj: product })
-      })
+        res.send({ msg: "Added to db", obj: product });
+      });
   });
 
   // Delete all products
@@ -37,10 +36,9 @@ module.exports = () => {
     knex("products")
       .del()
       .then(() => {
-        res.send({ msg: "Deleted all products"})
+        res.send({ msg: "Deleted all products" });
       });
   });
-
 
   return router;
 };

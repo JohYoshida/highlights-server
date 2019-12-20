@@ -11,10 +11,9 @@ module.exports = () => {
 
   // List producers
   router.get("/", (req, res) => {
-    knex("producers")
-      .then(producers => {
-        res.send(producers)
-      })
+    knex("producers").then(producers => {
+      res.send(producers);
+    });
   });
 
   // Post a new producer
@@ -36,14 +35,17 @@ module.exports = () => {
           knex("producers")
             .insert({ id, name })
             .then(() => {
-              res.send({ msg: "Added to db", obj: { id, name }})
-            })
+              res.send({ msg: "Added to db", obj: { id, name } });
+            });
         }
       })
       .catch(err => {
-        res.send({ msg: "Failed to register user! Error:\n" + err, verified: false });
+        res.send({
+          msg: "Failed to register user! Error:\n" + err,
+          verified: false
+        });
         console.log("Error!", err);
-      })
+      });
   });
 
   // Delete all producers
@@ -51,10 +53,9 @@ module.exports = () => {
     knex("producers")
       .del()
       .then(() => {
-        res.send({ msg: "Deleted all producers"})
+        res.send({ msg: "Deleted all producers" });
       });
   });
-
 
   return router;
 };

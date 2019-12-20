@@ -11,10 +11,9 @@ module.exports = () => {
 
   // List purchases
   router.get("/", (req, res) => {
-    knex("purchases")
-      .then(purchases => {
-        res.send(purchases)
-      })
+    knex("purchases").then(purchases => {
+      res.send(purchases);
+    });
   });
 
   // Post a new purchase
@@ -26,14 +25,14 @@ module.exports = () => {
       density: "dense",
       size: "large",
       amount: "much",
-      createdAt: moment().format(),
+      createdAt: moment().format()
     };
     // Insert new purchase into db
     knex("purchases")
       .insert(purchase)
       .then(() => {
-        res.send({ msg: "Added to db", obj: purchase })
-      })
+        res.send({ msg: "Added to db", obj: purchase });
+      });
   });
 
   // Delete all purchases
@@ -41,10 +40,9 @@ module.exports = () => {
     knex("purchases")
       .del()
       .then(() => {
-        res.send({ msg: "Deleted all purchases"})
+        res.send({ msg: "Deleted all purchases" });
       });
   });
-
 
   return router;
 };
