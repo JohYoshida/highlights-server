@@ -21,7 +21,7 @@ module.exports = () => {
       });
   });
 
-  // Post a new producer
+  // Post a new producer by ID
   router.post("/:name", (req, res) => {
     let id = uuid();
     let { name } = req.params;
