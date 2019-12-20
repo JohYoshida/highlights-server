@@ -17,6 +17,7 @@ module.exports = () => {
       })
       .catch(err => {
         res.send({ err });
+        console.log(err);
       });
   });
 
@@ -24,7 +25,6 @@ module.exports = () => {
   router.post("/:type/:name", (req, res) => {
     let id = uuid();
     let { type, name } = req.params;
-    console.log(type, name);
     // Check for existing strain
     knex("strains")
       .first()
