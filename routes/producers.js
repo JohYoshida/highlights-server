@@ -11,18 +11,20 @@ module.exports = () => {
 
   // List producers
   router.get("/", (req, res) => {
-    knex("producers").then(producers => {
-      res.send(producers);
-    })
-    .catch(err => {
-      res.send({ err });
-    });
+    knex("producers")
+      .then(producers => {
+        res.send(producers);
+      })
+      .catch(err => {
+        res.send({ msg: "Failed to access database. Error:\n" + err });
+        console.log(err);
+      });
   });
 
   // Post a new producer
-  router.post("/", (req, res) => {
+  router.post("/:name", (req, res) => {
     let id = uuid();
-    let name = "Aurora";
+    let { name } = req.params;
     // Check for existing producer
     knex("producers")
       .first()
@@ -30,18 +32,18 @@ module.exports = () => {
       .then(producer => {
         if (producer) {
           res.send({
-            msg: "A producer with that name already exists.",
-            verified: false
+            msg: "A producer with that name already exists."
           });
         } else {
           // Insert new producer into db
           knex("producers")
             .insert({ id, name })
             .then(() => {
-              res.send({ msg: "Added to db", obj: { id, name } });
+              res.send({ msg: "Added to database.", obj: { id, name } });
             })
             .catch(err => {
-              res.send({ err });
+              res.send({ msg: "Failed to add to database. Error:\n" + err });
+              console.log(err);
             });
         }
       })
@@ -50,7 +52,7 @@ module.exports = () => {
           msg: "Failed to register user! Error:\n" + err,
           verified: false
         });
-        console.log("Error!", err);
+        console.log(err);
       });
   });
 
