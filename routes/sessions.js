@@ -13,8 +13,11 @@ module.exports = () => {
   router.get("/", (req, res) => {
     knex("sessions")
       .then(sessions => {
-        res.send(sessions)
+        res.send(sessions);
       })
+      .catch(err => {
+        res.send({ err });
+      });
   });
 
   // Post a new session
@@ -24,14 +27,17 @@ module.exports = () => {
       product_id: uuid(),
       purchase_id: uuid(),
       rating: 3,
-      createdAt: moment().format(),
+      createdAt: moment().format()
     };
     // Insert new session into db
     knex("sessions")
       .insert(session)
       .then(() => {
-        res.send({ msg: "Added to db", obj: session })
+        res.send({ msg: "Added to db", obj: session });
       })
+      .catch(err => {
+        res.send({ err });
+      });
   });
 
   // Delete all sessions
@@ -39,10 +45,12 @@ module.exports = () => {
     knex("sessions")
       .del()
       .then(() => {
-        res.send({ msg: "Deleted all sessions"})
+        res.send({ msg: "Deleted all sessions" });
+      })
+      .catch(err => {
+        res.send({ err });
       });
   });
-
 
   return router;
 };
