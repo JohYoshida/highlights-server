@@ -72,6 +72,19 @@ module.exports = () => {
         console.log(err);
       });
   });
+
+  // Delete strain by ID
+  router.delete("/:id", (req, res) => {
+    let { id } = req.params;
+    knex("strains")
+      .where({ id })
+      .del()
+      .then(() => {
+        res.send({ msg: "Deleted strain " + id });
+      })
+      .catch(err => {
+        res.send({ msg: "Failed to delete strain. Error:\n" + err });
+        console.log(err);
       });
   });
 
