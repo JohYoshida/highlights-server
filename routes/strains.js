@@ -13,6 +13,9 @@ module.exports = () => {
   router.get("/", (req, res) => {
     knex("strains").then(strains => {
       res.send(strains);
+    })
+    .catch(err => {
+      res.send({ err });
     });
   });
 
@@ -37,6 +40,9 @@ module.exports = () => {
             .insert({ id, name, type })
             .then(() => {
               res.send({ msg: "Added to db", obj: { id, name, type } });
+            })
+            .catch(err => {
+              res.send({ err });
             });
         }
       })
@@ -55,6 +61,9 @@ module.exports = () => {
       .del()
       .then(() => {
         res.send({ msg: "Deleted all strains" });
+      })
+      .catch(err => {
+        res.send({ err });
       });
   });
 

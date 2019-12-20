@@ -13,6 +13,9 @@ module.exports = () => {
   router.get("/", (req, res) => {
     knex("products").then(products => {
       res.send(products);
+    })
+    .catch(err => {
+      res.send({ err });
     });
   });
 
@@ -28,6 +31,9 @@ module.exports = () => {
       .insert(product)
       .then(() => {
         res.send({ msg: "Added to db", obj: product });
+      })
+      .catch(err => {
+        res.send({ err });
       });
   });
 
@@ -37,6 +43,9 @@ module.exports = () => {
       .del()
       .then(() => {
         res.send({ msg: "Deleted all products" });
+      })
+      .catch(err => {
+        res.send({ err });
       });
   });
 

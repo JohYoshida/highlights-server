@@ -13,6 +13,9 @@ module.exports = () => {
   router.get("/", (req, res) => {
     knex("producers").then(producers => {
       res.send(producers);
+    })
+    .catch(err => {
+      res.send({ err });
     });
   });
 
@@ -36,6 +39,9 @@ module.exports = () => {
             .insert({ id, name })
             .then(() => {
               res.send({ msg: "Added to db", obj: { id, name } });
+            })
+            .catch(err => {
+              res.send({ err });
             });
         }
       })
@@ -54,6 +60,9 @@ module.exports = () => {
       .del()
       .then(() => {
         res.send({ msg: "Deleted all producers" });
+      })
+      .catch(err => {
+        res.send({ err });
       });
   });
 
