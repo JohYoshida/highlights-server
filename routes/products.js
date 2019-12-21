@@ -30,8 +30,8 @@ module.exports = () => {
     knex("products")
       .first()
       .where({ producer_id, strain_id })
-      .then(product => {
-        if (product) {
+      .then(existingProduct => {
+        if (existingProduct) {
           res.send({
             msg: "A product with that information already exists."
           });
@@ -40,7 +40,7 @@ module.exports = () => {
           knex("products")
             .insert(product)
             .then(() => {
-              res.send({ msg: "Added to db", obj: product });
+              res.send({ msg: "Added product to database.", obj: product });
             })
             .catch(err => {
               res.send({ err });
