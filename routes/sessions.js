@@ -16,27 +16,30 @@ module.exports = () => {
         res.send(sessions);
       })
       .catch(err => {
-        res.send({ err });
+        res.send({ msg: "Failed to access database. Error:\n" + err });
+        console.log(err);
       });
   });
 
   // Post a new session
-  router.post("/", (req, res) => {
+  router.post("/:purchase_id/:rating", (req, res) => {
+    const { purchase_id, rating } = req.params;
     let session = {
       id: uuid(),
-      product_id: uuid(),
-      purchase_id: uuid(),
-      rating: 3,
+      // product_id: uuid(),
+      purchase_id,
+      rating,
       createdAt: moment().format()
     };
     // Insert new session into db
     knex("sessions")
       .insert(session)
       .then(() => {
-        res.send({ msg: "Added to db", obj: session });
+        res.send({ msg: "Added to database", obj: session });
       })
       .catch(err => {
-        res.send({ err });
+        res.send({ msg: "Failed to add to database. Error:\n" + err });
+        console.log(err);
       });
   });
 
@@ -49,6 +52,7 @@ module.exports = () => {
       })
       .catch(err => {
         res.send({ err });
+        console.log(err);
       });
   });
 
