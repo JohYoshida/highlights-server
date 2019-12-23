@@ -22,10 +22,10 @@ module.exports = () => {
   });
 
   // Post a new product by ID
-  router.post("/:producer_id/:strain_id", (req, res) => {
+  router.post("/:producer_id/:strain_id/:name", (req, res) => {
     let id = uuid();
-    let { producer_id, strain_id } = req.params;
-    let product = { id, producer_id, strain_id };
+    let { producer_id, strain_id, name } = req.params;
+    let product = { id, producer_id, strain_id, name };
     // Check for existing product
     knex("products")
       .first()
