@@ -22,15 +22,51 @@ const purchasesRouter = require("./routes/purchases")(knex);
 app.use(bodyParser.json());
 
 // Routers
-app.use("/sessions", sessionsRouter);
-app.use("/strains", strainsRouter);
 app.use("/producers", producersRouter);
 app.use("/products", productsRouter);
 app.use("/purchases", purchasesRouter);
+app.use("/sessions", sessionsRouter);
+app.use("/strains", strainsRouter);
 
-// Home
+// Send all data as a JSON object
 app.get("/", (req, res) => {
-  res.send("Highlights server");
+  knex("producers")
+    .then(producers => {
+      knex("products")
+        .then(products => {
+          knex("purchases")
+            .then(purchases => {
+              knex("sessions")
+                .then(sessions => {
+                  knex("strains")
+                    .then(strains => {
+                      res.send({
+                        producers,
+                        products,
+                        purchases,
+                        sessions,
+                        strains
+                      });
+                    })
+                    .catch(err => {
+                      res.send({ err });
+                    });
+                })
+                .catch(err => {
+                  res.send({ err });
+                });
+            })
+            .catch(err => {
+              res.send({ err });
+            });
+        })
+        .catch(err => {
+          res.send({ err });
+        });
+    })
+    .catch(err => {
+      res.send({ err });
+    });
 });
 
 // Start app
