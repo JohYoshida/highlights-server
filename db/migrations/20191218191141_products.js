@@ -5,6 +5,7 @@ exports.up = function(knex) {
       table.uuid("id").primary();
       table.uuid("producer_id");
       table.uuid("strain_id");
+      table.string("name");
     })
   ]);
 };
