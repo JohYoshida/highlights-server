@@ -64,6 +64,7 @@ module.exports = () => {
       })
       .catch(err => {
         res.send({ msg: "Failed to delete all producers. Error:\n" + err });
+        console.log(err);
       });
   });
 
@@ -78,6 +79,7 @@ module.exports = () => {
       })
       .catch(err => {
         res.send({ msg: "Failed to delete producer. Error:\n" + err });
+        console.log(err);
       });
   });
 
