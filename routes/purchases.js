@@ -38,7 +38,7 @@ module.exports = () => {
     knex("purchases")
       .insert(purchase)
       .then(() => {
-        res.send({ msg: "Added to db", obj: purchase });
+        res.send({ msg: "Added to database", obj: purchase });
       })
       .catch(err => {
         res.send({ msg: "Failed to add to database. Error:\n" + err });
