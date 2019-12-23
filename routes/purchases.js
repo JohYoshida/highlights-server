@@ -50,7 +50,23 @@ module.exports = () => {
         res.send({ msg: "Deleted all purchases" });
       })
       .catch(err => {
-        res.send({ err });
+        res.send({ msg: "Failed to delete all purchases. Error:\n" + err });
+        console.log(err);
+      });
+  });
+
+  // Delete a purchases by ID
+  router.delete("/:id", (req, res) => {
+    let { id } = req.params;
+    knex("purchases")
+      .where({ id })
+      .del()
+      .then(() => {
+        res.send({ msg: "Deleted purchase " + id });
+      })
+      .catch(err => {
+        res.send({ msg: "Failed to delete purchase. Error:\n" + err });
+        console.log(err);
       });
   });
 
