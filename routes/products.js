@@ -25,7 +25,7 @@ module.exports = () => {
   router.post("/:producer_id/:strain_id", (req, res) => {
     let id = uuid();
     let { producer_id, strain_id } = req.params;
-    let product = { id, producer_id, strain_id }
+    let product = { id, producer_id, strain_id };
     // Check for existing product
     knex("products")
       .first()
