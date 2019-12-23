@@ -16,19 +16,22 @@ module.exports = () => {
         res.send(purchases);
       })
       .catch(err => {
-        res.send({ err });
+        res.send({ msg: "Failed to access database. Error:\n" + err });
+        console.log(err);
       });
   });
 
   // Post a new purchase
-  router.post("/", (req, res) => {
+  router.post("/:product_id", (req, res) => {
+    const { product_id } = req.params;
+    const { moisture, density, size, amount } = req.body;
     let purchase = {
       id: uuid(),
-      product_id: uuid(),
-      moisture: "moist",
-      density: "dense",
-      size: "large",
-      amount: "much",
+      product_id,
+      moisture,
+      density,
+      size,
+      amount,
       createdAt: moment().format()
     };
     // Insert new purchase into db
@@ -38,7 +41,8 @@ module.exports = () => {
         res.send({ msg: "Added to db", obj: purchase });
       })
       .catch(err => {
-        res.send({ err });
+        res.send({ msg: "Failed to add to database. Error:\n" + err });
+        console.log(err);
       });
   });
 
