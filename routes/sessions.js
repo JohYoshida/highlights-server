@@ -22,11 +22,11 @@ module.exports = () => {
   });
 
   // Post a new session
-  router.post("/:purchase_id/:rating", (req, res) => {
+  router.post("/:purchase_id/:product_id/:rating", (req, res) => {
     const { purchase_id, rating } = req.params;
     let session = {
       id: uuid(),
-      // product_id: uuid(),
+      product_id,
       purchase_id,
       rating,
       createdAt: moment().format()
